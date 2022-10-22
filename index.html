@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+    <title>
+        Html CRUD with Pure JavaScript
+    </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+        <div>
+            <label>Enter Item ID</label><label class="validation-error hide" id="fullNameValidationError">This field is required.</label>
+            <input type="text" name="item_id" id="item_id" placeholder="Item ID" autocomplete="off">
+        </div>
+        <ul class="list"></ul>
+        <div class="form-action-buttons">
+            <input type="submit" value="Enter">
+        </div>
+    </form>
+    </td>
+    <td>
+        <table class="list" id="prod_list">
+            <thead>
+                <tr>
+                    <th>item_id</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <script src="script.js"></script>
+</body>
+
+</html>
