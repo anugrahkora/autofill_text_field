@@ -7,7 +7,6 @@ function removeElements() {
 }
 
 let input = document.getElementById("item_id");
-var selectedRow = null
 
 let names = [
     "Ayla",
@@ -37,6 +36,8 @@ let names = [
     "Glen",
     "Peter",
 ];
+
+let selectedNames = []
 
 let sortedNames = names.sort();
 
@@ -87,6 +88,8 @@ function onFormSubmit() {
             updateRecord(formData);
         resetForm();
     }
+
+
 }
 
 function readFormData() {
@@ -101,9 +104,21 @@ function insertNewRecord(data) {
     var newRow = table.insertRow(table.length);
     cell1 = newRow.insertCell(0);
     cell1.innerHTML = data.item_id;
-
-    cell4 = newRow.insertCell(1);
-    cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+    selectedNames.push(data.item_id);
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = 'Item name';
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = 'pcs';
+    cell4 = newRow.insertCell(3);
+    cell4.innerHTML = 0;
+    cell5 = newRow.insertCell(4);
+    cell5.innerHTML = `<input type="text" name="Unit${data.item_id}" id="${data.item_id}" placeholder="Quantity" autocomplete="off">`;
+    cell6 = newRow.insertCell(5);
+    cell6.innerHTML = `<input type="text" name="Price${data.item_id}" id="${data.item_id}" placeholder="Unit Price" autocomplete="off">`;
+    cell7 = newRow.insertCell(6);
+    cell7.innerHTML = `<input type="text" name="Amount${data.item_id}" id="${data.item_id}" placeholder="Amount" autocomplete="off">`;
+    cell8 = newRow.insertCell(7);
+    cell8.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                        <a onClick="onDelete(this)">Delete</a>`;
 }
 
@@ -116,12 +131,16 @@ function resetForm() {
 function onEdit(td) {
     selectedRow = td.parentElement.parentElement;
     document.getElementById("item_id").value = selectedRow.cells[0].innerHTML;
+    // selectedNames.
 
 }
 
 function updateRecord(formData) {
     selectedRow.cells[0].innerHTML = formData.item_id;
 
+    // selectedNames[selectedNames.indexOf(selectedRow.cells[0].innerHTML)] = formData.item_id
+
+    // console.log(selectedNames)
 }
 
 function onDelete(td) {
