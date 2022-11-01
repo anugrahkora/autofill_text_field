@@ -24,7 +24,7 @@
     </form>
     </td>
     <td>
-        <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off"></form>
+
         <table class="list" id="prod_list">
             <thead>
                 <tr>
@@ -43,10 +43,11 @@
 
             </tbody>
         </table>
-        </form>
+        <label class="validation-error hide" id="emptyTableError">Table is Empty</label>
         <div class="form-action-buttons add">
-            <input type="submit" value="Add">
+            <input type="button" value="Add" onclick="onTableSubmit()">
         </div>
+
 
         <script src="script.js"></script>
 </body>
