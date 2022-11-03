@@ -116,21 +116,15 @@ function readTableData() {
 
         for (var j = 0; j < cellLength; j++) {
             var cellVal = cells.item(j);
+            id = cellVal.getElementsByTagName("input")[0].id;
+            var val = document.getElementById(id).value;
+            prod_info.push(val)
 
-            if (j > 3) {
-                id = cellVal.getElementsByTagName("input")[0].id;
-                var val = document.getElementById(id).value;
-                prod_info.push(val)
-
-            } else {
-                prod_info.push(cellVal.innerHTML);
-
-            }
         }
+
         products.push(prod_info)
     }
-    console.log(products)
-
+    // console.log(products)
 }
 
 function readFormData() {
@@ -142,22 +136,26 @@ function readFormData() {
 
 function insertNewRecord(data) {
     var table = document.getElementById("prod_list").getElementsByTagName('tbody')[0];
+    var rowsLength = document.getElementById("prod_list").rows.length;
+    var id = data.item_id + ":" + rowsLength;
+
     var newRow = table.insertRow();
     cell1 = newRow.insertCell(0);
-    cell1.innerHTML = data.item_id;
-    selectedNames.push(data.item_id);
+    cell1.innerHTML = `<input class="data" name="${id}" id="${id}" value=${data.item_id} readonly>`;
     cell2 = newRow.insertCell(1);
-    cell2.innerHTML = 'Item name';
+    cell2.innerHTML = `<input class="data" name="itemName${id}" id="itemName${id}" value="ItemName" readonly>`;
+
     cell3 = newRow.insertCell(2);
-    cell3.innerHTML = 'pcs';
+    cell3.innerHTML = `<input class="data" name="unit${id}" id="unit${id}" value="pcs" readonly>`;
+
     cell4 = newRow.insertCell(3);
-    cell4.innerHTML = 0;
+    cell4.innerHTML = `<input class="data" name="stock${id}" id="stock${id}" value="0" readonly>`;
     cell5 = newRow.insertCell(4);
-    cell5.innerHTML = `<input type="text" name="Quantity${data.item_id}" id="quantity${data.item_id}" onkeyup="updateUnitPrice(this)" placeholder="Quantity" autocomplete="off">`;
+    cell5.innerHTML = `<input type="text" name="Quantity${id}" id="quantity${id}" onkeyup="updateUnitPrice(this)" placeholder="Quantity" autocomplete="off">`;
     cell6 = newRow.insertCell(5);
-    cell6.innerHTML = `<input type="text" name="UnitPrice${data.item_id}" id="unitprice${data.item_id}" onkeyup="updateUnitPrice(this)" placeholder="Unit Price" autocomplete="off">`;
+    cell6.innerHTML = `<input type="text" name="UnitPrice${id}" id="unitprice${id}" onkeyup="updateUnitPrice(this)" placeholder="Unit Price" autocomplete="off">`;
     cell7 = newRow.insertCell(6);
-    cell7.innerHTML = `<input type="text" name="Amount${data.item_id}" id="amount${data.item_id}" placeholder="Amount" autocomplete="off">`;
+    cell7.innerHTML = `<input type="text" name="Amount${id}" id="amount${id}" placeholder="Amount" autocomplete="off" readonly>`;
     cell8 = newRow.insertCell(7);
     cell8.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                        <a onClick="onDelete(this)">Delete</a>`;
@@ -173,7 +171,7 @@ function resetForm() {
 }
 
 function updateUnitPrice(data) {
-    id = data.parentElement.parentElement.cells[0].innerHTML;
+    id = data.parentElement.parentElement.cells[0].getElementsByTagName("input")[0].id;
     var unitPrice = document.getElementById(`unitprice${id}`);
     var amount = document.getElementById(`amount${id}`);
     var quantity = document.getElementById(`quantity${id}`);
