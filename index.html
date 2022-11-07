@@ -28,8 +28,10 @@
         <table class="list" id="prod_list">
             <thead>
                 <tr>
+                    <th>S.no</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
+                    <th>Desc</th>
                     <th>Unit</th>
                     <th>Stock</th>
                     <th>Quantity</th>
@@ -44,6 +46,9 @@
             </tbody>
         </table>
         <label class="validation-error hide" id="emptyTableError">Table is Empty</label>
+        <div>
+            <input type="text" class="total" id="total" value=0 readonly>
+        </div>
         <div class="form-action-buttons add">
             <input type="button" value="Add" onclick="onTableSubmit()">
         </div>

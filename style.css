@@ -84,7 +84,6 @@ form div.form-action-buttons.enter {
 }
 
 .add {
-    margin-top: 12em;
     text-align: center;
 }
 
@@ -122,4 +121,13 @@ ul {
 
 .list-items:hover {
     background-color: #dddddd;
+}
+
+.total {
+    margin-top: 12em;
+    width: 30%;
+    text-align: right;
+    margin-left: 70%;
+    padding: 12px 20px;
+    pointer-events: none;
 }

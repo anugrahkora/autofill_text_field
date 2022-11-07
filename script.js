@@ -46,7 +46,7 @@ let products = []
 var selectedRow = null
 
 
-
+let indexes = []
 
 
 input.addEventListener("keyup", (e) => {
@@ -141,28 +141,32 @@ function insertNewRecord(data) {
 
     var newRow = table.insertRow();
     cell1 = newRow.insertCell(0);
-    cell1.innerHTML = `<input class="data" name="${id}" id="${id}" value=${data.item_id} readonly>`;
+    cell1.innerHTML = `<input class="data" name="index${id}" id="index${id}" value=${rowsLength} readonly>`;
     cell2 = newRow.insertCell(1);
-    cell2.innerHTML = `<input class="data" name="itemName${id}" id="itemName${id}" value="ItemName" readonly>`;
-
+    cell2.innerHTML = `<input class="data" name="${id}" id="${id}" value=${data.item_id} readonly>`;
     cell3 = newRow.insertCell(2);
-    cell3.innerHTML = `<input class="data" name="unit${id}" id="unit${id}" value="pcs" readonly>`;
-
+    cell3.innerHTML = `<input class="data" name="itemName${id}" id="itemName${id}" value="ItemName" readonly>`;
     cell4 = newRow.insertCell(3);
-    cell4.innerHTML = `<input class="data" name="stock${id}" id="stock${id}" value="0" readonly>`;
+    cell4.innerHTML = `<input type="text" name="desc${id}" id="desc${id}">`;
     cell5 = newRow.insertCell(4);
-    cell5.innerHTML = `<input type="text" name="Quantity${id}" id="quantity${id}" onkeyup="updateUnitPrice(this)" placeholder="Quantity" autocomplete="off">`;
+    cell5.innerHTML = `<input class="data" name="unit${id}" id="unit${id}" value="pcs" readonly>`;
+
     cell6 = newRow.insertCell(5);
-    cell6.innerHTML = `<input type="text" name="UnitPrice${id}" id="unitprice${id}" onkeyup="updateUnitPrice(this)" placeholder="Unit Price" autocomplete="off">`;
+    cell6.innerHTML = `<input class="data" name="stock${id}" id="stock${id}" value="0" readonly>`;
     cell7 = newRow.insertCell(6);
-    cell7.innerHTML = `<input type="text" name="Amount${id}" id="amount${id}" placeholder="Amount" autocomplete="off" readonly>`;
+    cell7.innerHTML = `<input type="text" name="Quantity${id}" id="quantity${id}" onkeyup="updateUnitPrice(this)" placeholder="Quantity" autocomplete="off">`;
     cell8 = newRow.insertCell(7);
-    cell8.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+    cell8.innerHTML = `<input type="text" name="UnitPrice${id}" id="unitprice${id}" onkeyup="updateUnitPrice(this)" placeholder="Unit Price" autocomplete="off">`;
+    cell9 = newRow.insertCell(8);
+    cell9.innerHTML = `<input type="text" name="Amount${id}" id="amount${id}" placeholder="Amount" autocomplete="off"  readonly>`;
+    cell10 = newRow.insertCell(9);
+    cell10.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                        <a onClick="onDelete(this)">Delete</a>`;
-
-
+    // updateTotalPrice()
 
 }
+
+
 
 function resetForm() {
     document.getElementById("item_id").value = "";
@@ -170,13 +174,39 @@ function resetForm() {
     selectedRow = null;
 }
 
+function updateTotalPrice() {
+
+    var table = document.getElementById("prod_list");
+    var rowsLength = table.rows.length;
+    var totalDiv = document.getElementById("total");
+    var total = 0
+
+    for (var i = 1; i < rowsLength; ++i) {
+        var cells = table.rows.item(i).cells;
+
+
+
+        var cellVal = cells.item(8);
+        total = total + Number(cellVal.getElementsByTagName("input")[0].value);
+
+
+
+        totalDiv.value = total
+
+    }
+
+
+}
+
 function updateUnitPrice(data) {
-    id = data.parentElement.parentElement.cells[0].getElementsByTagName("input")[0].id;
+    id = data.parentElement.parentElement.cells[1].getElementsByTagName("input")[0].id;
     var unitPrice = document.getElementById(`unitprice${id}`);
     var amount = document.getElementById(`amount${id}`);
     var quantity = document.getElementById(`quantity${id}`);
     var val = quantity.value * unitPrice.value
     amount.value = val
+    updateTotalPrice()
+
 
 }
 
@@ -196,8 +226,31 @@ function updateRecord(formData) {
 
 function onDelete(td) {
     if (confirm('Are you sure to delete this record ?')) {
+        var table = document.getElementById("prod_list");
         row = td.parentElement.parentElement;
+        var totalDiv = document.getElementById("total");
+
+        var cells = table.rows.item(row.rowIndex).cells;
+        var cellVal = cells.item(8)
+        totalDiv.value -= Number(cellVal.getElementsByTagName("input")[0].value);
+
         document.getElementById("prod_list").deleteRow(row.rowIndex);
+        var rowsLength = table.rows.length;
+
+        for (var i = 1; i < rowsLength; ++i) {
+            var cells = table.rows.item(i).cells;
+
+
+
+            var cellVal = cells.item(0);
+
+
+
+
+            cellVal.getElementsByTagName("input")[0].value = i;
+
+            // console.log(cellVal.getElementsByTagName("input")[0].value)
+        }
         resetForm();
     }
 }
