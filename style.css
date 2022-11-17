@@ -79,6 +79,11 @@ input[type=button] {
     text-align: center;
 }
 
+form div.form-action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
 form div.form-action-buttons.enter {
     text-align: right;
 }
@@ -130,4 +135,51 @@ ul {
     margin-left: 70%;
     padding: 12px 20px;
     pointer-events: none;
+}
+
+.form-popup {
+    width: 80%;
+    height: 90%;
+    display: none;
+    position: fixed;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+
+.form-container {
+    height: 90%;
+    padding: 10px;
+    overflow: auto;
+    background-color: white;
+}
+
+.btn {
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.8;
+}
+
+
+/* Add a red background color to the cancel button */
+
+.cancel {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.8;
+    background-color: red;
+}
+
+
+/* Add some hover effects to buttons */
+
+.form-container .btn:hover,
+.open-button:hover {
+    opacity: 1;
 }
