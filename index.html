@@ -12,13 +12,40 @@
 
 <body>
 
+
+    <div class="form-popup" id="all-items">
+        <div class="form-container">
+
+
+            <table class="all-items-list" id="all-items-list">
+                <thead>
+                    <tr>
+                        <th>S.no</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="cancel" onclick="closeForm()">Close</button>
+
+    </div>
+
     <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
         <div>
             <label>Enter Item ID</label><label class="validation-error hide" id="fullNameValidationError">This field is required.</label>
             <input type="text" class="itemID" name="item_id" id="item_id" placeholder="Item ID" autocomplete="off">
         </div>
         <ul class="list"></ul>
+
         <div class="form-action-buttons enter">
+            <input type="button" value="Show all items" onclick="openForm()">
+
             <input type="submit" value="Enter">
         </div>
     </form>
