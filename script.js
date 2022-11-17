@@ -80,8 +80,9 @@ function displayNames(value) {
 }
 
 function onFormSubmit() {
-    if (validate()) {
-        var formData = readFormData();
+    var formData = readFormData();
+
+    if (validate() && names.includes(formData.item_id)) {
         if (selectedRow == null)
             insertNewRecord(formData);
         else
@@ -98,6 +99,28 @@ function onTableSubmit() {
         readTableData();
 
     }
+
+
+}
+
+function showAllItems() {
+    var table = document.getElementById("all-items-list").getElementsByTagName('tbody')[0];
+    var rowsLength = table.rows.length;
+
+    if (rowsLength == 0) {
+        var id = 2 + ":" + Math.floor(Math.random() * 1000);
+        for (var i = 1; i < names.length; ++i) {
+            var newRow = table.insertRow();
+            cell1 = newRow.insertCell(0);
+            cell1.innerHTML = `<input class="data" name="index${id}" id="index${id}" value=${i} readonly>`;
+            cell2 = newRow.insertCell(1);
+            cell2.innerHTML = `<input class="data" name="${id}" id="${id}" value=${names[i]} readonly>`;
+            cell3 = newRow.insertCell(2);
+            cell3.innerHTML = `<input class="data" name="itemName${id}" id="itemName${id}" value="ItemName" readonly>`;
+        }
+    }
+
+
 
 
 }
@@ -282,4 +305,13 @@ function validate() {
             document.getElementById("fullNameValidationError").classList.add("hide");
     }
     return isValid;
+}
+
+function openForm() {
+    showAllItems();
+    document.getElementById("all-items").style.display = "block";
+}
+
+function closeForm() {
+    document.getElementById("all-items").style.display = "none";
 }
