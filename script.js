@@ -108,8 +108,8 @@ function showAllItems() {
     var rowsLength = table.rows.length;
 
     if (rowsLength == 0) {
-        var id = 2 + ":" + Math.floor(Math.random() * 1000);
         for (var i = 1; i < names.length; ++i) {
+            var id = names[i] + ":" + Math.floor(Math.random() * 1000);
             var newRow = table.insertRow();
             cell1 = newRow.insertCell(0);
             cell1.innerHTML = `<input class="data" name="index${id}" id="index${id}" value=${i} readonly>`;
@@ -117,11 +117,23 @@ function showAllItems() {
             cell2.innerHTML = `<input class="data" name="${id}" id="${id}" value=${names[i]} readonly>`;
             cell3 = newRow.insertCell(2);
             cell3.innerHTML = `<input class="data" name="itemName${id}" id="itemName${id}" value="ItemName" readonly>`;
+            cell4 = newRow.insertCell(3);
+            cell4.innerHTML = `<a onClick="addDataToField(this)">Add</a>`;
         }
     }
 
 
 
+
+}
+
+function addDataToField(value) {
+
+    id = value.parentElement.parentElement.cells[1].getElementsByTagName("input")[0].id;
+    var val = document.getElementById(id).value;
+    input.value = val;
+
+    closeForm();
 
 }
 
@@ -236,13 +248,14 @@ function updateUnitPrice(data) {
 
 function onEdit(td) {
     selectedRow = td.parentElement.parentElement;
-    document.getElementById("item_id").value = selectedRow.cells[0].innerHTML;
+    document.getElementById("item_id").value = selectedRow.cells[1].getElementsByTagName("input")[0].value;
+
 
 
 }
 
 function updateRecord(formData) {
-    selectedRow.cells[0].innerHTML = formData.item_id;
+    selectedRow.cells[1].getElementsByTagName("input")[0].value = formData.item_id;
 
 
 }
