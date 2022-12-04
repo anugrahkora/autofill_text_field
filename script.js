@@ -8,6 +8,7 @@ function removeElements() {
 
 let input = document.getElementById("item_id");
 
+
 let names = [
     "Ayla",
     "Jake",
@@ -22,6 +23,11 @@ let names = [
     "Amanda",
     "Amara",
     "Sam",
+
+];
+
+
+let transactions = [
     "Sandy",
     "Danny",
     "Ellen",
@@ -35,8 +41,7 @@ let names = [
     "Amy",
     "Glen",
     "Peter",
-];
-
+]
 let selectedNames = []
 
 let sortedNames = names.sort();
@@ -50,7 +55,12 @@ let indexes = []
 
 
 input.addEventListener("keyup", (e) => {
+    search_items();
 
+});
+
+
+function search_items() {
     removeElements();
     for (let i of sortedNames) {
 
@@ -72,7 +82,10 @@ input.addEventListener("keyup", (e) => {
             document.querySelector(".list").appendChild(listItem);
         }
     }
-});
+}
+
+
+
 
 function displayNames(value) {
     input.value = value;
