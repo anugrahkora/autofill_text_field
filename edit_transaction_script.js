@@ -187,15 +187,51 @@ function insertTransactions() {
             cell6 = newRow.insertCell(5);
             cell6.innerHTML = `<input class="data" name="stock${id}" id="stock${id}" value="0" readonly>`;
             cell7 = newRow.insertCell(6);
-            cell7.innerHTML = `<input type="text" name="Quantity${id}" id="quantity${id}" onkeyup="updateUnitPrice(this)" placeholder="Quantity" autocomplete="off">`;
+            cell7.innerHTML = `<input type="text" name="Quantity${id}" id="quantity${id}" onkeyup="updateTransactionUnitPrice(this)" placeholder="Quantity" autocomplete="off">`;
             cell8 = newRow.insertCell(7);
-            cell8.innerHTML = `<input type="text" name="UnitPrice${id}" id="unitprice${id}" onkeyup="updateUnitPrice(this)" placeholder="Unit Price" autocomplete="off">`;
+            cell8.innerHTML = `<input type="text" name="UnitPrice${id}" id="unitprice${id}" onkeyup="updateTransactionUnitPrice(this)" placeholder="Unit Price" autocomplete="off">`;
             cell9 = newRow.insertCell(8);
             cell9.innerHTML = `<input type="text" name="Amount${id}" id="amount${id}" placeholder="Amount" autocomplete="off"  readonly>`;
             cell10 = newRow.insertCell(9);
-            cell10.innerHTML = `<a onClick="onEditTransaction(this)">Edit</a>
-                       <a onClick="onDeleteTransaction(this)">Delete</a>`;
+            cell10.innerHTML = `<a onClick="onDeleteTransaction(this)">Delete</a>`;
         }
+    }
+
+
+}
+
+
+function updateTransactionUnitPrice(data) {
+    id = data.parentElement.parentElement.cells[1].getElementsByTagName("input")[0].id;
+    var unitPrice = document.getElementById(`unitprice${id}`);
+    var amount = document.getElementById(`amount${id}`);
+    var quantity = document.getElementById(`quantity${id}`);
+    var val = quantity.value * unitPrice.value
+    amount.value = val
+    updateTotalPriceTransaction()
+
+
+}
+
+function updateTotalPriceTransaction() {
+
+    var table = document.getElementById("transactions_list");
+    var rowsLength = table.rows.length;
+    var totalDiv = document.getElementById("totalTransaction");
+    var total = 0
+
+    for (var i = 1; i < rowsLength; ++i) {
+        var cells = table.rows.item(i).cells;
+
+
+
+        var cellVal = cells.item(8);
+        total = total + Number(cellVal.getElementsByTagName("input")[0].value);
+
+
+
+        totalDiv.value = total
+
     }
 
 
@@ -230,13 +266,7 @@ function validateTransaction() {
     return isValid;
 }
 
-function onEditTransaction(td) {
-    selectedRow = td.parentElement.parentElement;
-    document.getElementById("transactions_item_id").value = selectedRow.cells[1].getElementsByTagName("input")[0].value;
 
-
-
-}
 
 function updateRecordTransaction(formData) {
     selectedRow.cells[1].getElementsByTagName("input")[0].value = formData.item_id;
@@ -248,7 +278,7 @@ function onDeleteTransaction(td) {
     if (confirm('Are you sure to delete this record ?')) {
         var table = document.getElementById("transactions_list");
         row = td.parentElement.parentElement;
-        var totalDiv = document.getElementById("total");
+        var totalDiv = document.getElementById("totalTransaction");
 
         var cells = table.rows.item(row.rowIndex).cells;
         var cellVal = cells.item(8)
